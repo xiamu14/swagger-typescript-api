@@ -35,6 +35,7 @@ const SCHEMA_TYPES = {
 const HTTP_CLIENT = {
   FETCH: "fetch",
   AXIOS: "axios",
+  TARO: "taro",
 };
 
 module.exports = {

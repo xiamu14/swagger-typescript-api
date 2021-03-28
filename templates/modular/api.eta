@@ -1,7 +1,8 @@
 <%
 const { utils, route, config, modelTypes } = it;
 const { _, classNameCase, require } = utils;
-const apiClassName = classNameCase(route.moduleName);
+const apiClassName = classNameCase(route.moduleName)+'Api';
+const apiInstanceName = route.moduleName + 'Api';
 const routes = route.routes;
 const dataContracts = _.map(modelTypes, "name");
 %>
@@ -13,7 +14,7 @@ import { HttpClient, RequestParams, ContentType } from "./<%~ config.fileNames.h
 import { <%~ dataContracts.join(", ") %> } from "./<%~ config.fileNames.dataContracts %>"
 <% } %>
 
-export class <%= apiClassName %><SecurityDataType = unknown><% if (!config.singleHttpClient) { %> extends HttpClient<SecurityDataType> <% } %> {
+class <%= apiClassName %><SecurityDataType = unknown><% if (!config.singleHttpClient) { %> extends HttpClient<SecurityDataType> <% } %> {
 
 <% if(config.singleHttpClient) { %>
   constructor (private http: HttpClient<SecurityDataType>) {}
@@ -23,3 +24,7 @@ export class <%= apiClassName %><SecurityDataType = unknown><% if (!config.singl
         <%~ includeFile('./procedure-call.eta', { ...it, route }) %>
     <% }) %>
 }
+
+const <%= apiInstanceName %> = new <%= apiClassName %>();
+
+export default <%= apiInstanceName %>;
